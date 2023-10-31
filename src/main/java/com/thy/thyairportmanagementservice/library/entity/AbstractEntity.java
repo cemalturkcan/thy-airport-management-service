@@ -21,13 +21,11 @@ import java.util.Date;
 @EqualsAndHashCode(of = "id")
 public abstract class AbstractEntity implements Serializable {
 
+
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(
-            name = "UUID",
-            type = org.hibernate.id.uuid.UuidGenerator.class
-    )
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String id;
 
 
