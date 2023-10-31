@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CityServiceImpl implements CityService {
-
-
     private final CityRepository repository;
 
     @Override
