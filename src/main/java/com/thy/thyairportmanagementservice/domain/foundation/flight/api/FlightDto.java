@@ -1,6 +1,7 @@
 package com.thy.thyairportmanagementservice.domain.foundation.flight.api;
 
 import com.thy.thyairportmanagementservice.domain.foundation.airport.api.AirportDto;
+import com.thy.thyairportmanagementservice.domain.foundation.farecategory.impl.subcategoryrightcomponent.SubCategoryRightResponse;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,4 +18,5 @@ public class FlightDto {
     private final String flightDuration;
     private final AirportDto originAirport;
     private final AirportDto destinationAirport;
+    private final SubCategoryRightResponse subCategoryRightResponse;
 }
