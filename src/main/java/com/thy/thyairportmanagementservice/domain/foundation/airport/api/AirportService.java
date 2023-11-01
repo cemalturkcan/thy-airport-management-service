@@ -1,16 +1,19 @@
 package com.thy.thyairportmanagementservice.domain.foundation.airport.api;
 
+import com.thy.thyairportmanagementservice.domain.foundation.airport.impl.Airport;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface AirportService {
-    AirportDto createAirport(AirportDto dto);
+    AirportDto create(AirportDto dto);
 
-    AirportDto updateAirport(String id, AirportDto dto);
+    AirportDto update(String id, AirportDto dto);
 
-    void deleteAirport(String id);
+    void delete(String id);
 
-    AirportDto getAirportDtoById(String id);
+    AirportDto getById(String id);
 
     Page<AirportDto> filter(AirportDto airportDto, Pageable pageable);
+
+    AirportDto toDto(Airport airport);
 }

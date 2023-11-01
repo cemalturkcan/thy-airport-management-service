@@ -4,6 +4,7 @@ import com.thy.thyairportmanagementservice.domain.foundation.airport.api.Airport
 import com.thy.thyairportmanagementservice.domain.foundation.airport.api.AirportService;
 import com.thy.thyairportmanagementservice.domain.foundation.city.api.CityService;
 import com.thy.thyairportmanagementservice.domain.foundation.country.api.CountryService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,24 +21,30 @@ public class AirportServiceImpl implements AirportService {
     private final CountryService countryService;
 
     @Override
-    public AirportDto createAirport(AirportDto dto) {
+    public AirportDto create(AirportDto dto) {
         return toDto(repository.save(toEntity(new Airport(), dto)));
     }
 
 
     @Override
-    public AirportDto updateAirport(String id, AirportDto dto) {
+    public AirportDto update(String id, AirportDto dto) {
         return null;
     }
 
     @Override
-    public void deleteAirport(String id) {
+    public void delete(String id) {
 
     }
 
     @Override
-    public AirportDto getAirportDtoById(String id) {
-        return null;
+    public AirportDto getById(String id) {
+        return toDto(getByIdEntity(id));
+    }
+
+    public Airport getByIdEntity(String id) {
+        return repository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Airport not found" + id)
+        );
     }
 
     @Override
@@ -59,7 +66,8 @@ public class AirportServiceImpl implements AirportService {
     }
 
 
-    private AirportDto toDto(Airport airport) {
+
+    public AirportDto toDto(Airport airport) {
         return AirportDto.builder()
                 .id(airport.getId())
                 .created(airport.getCreated())

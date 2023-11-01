@@ -23,23 +23,23 @@ public class AirportController extends BaseController {
 
     @GetMapping("/{id}")
     public Response<AirportResponse> getById(@PathVariable(value = "id") String id) {
-        AirportDto airport = service.getAirportDtoById(id);
-        return respond(AirportResponse.fromDto(airport));
+        AirportDto dto = service.getById(id);
+        return respond(AirportResponse.fromDto(dto));
     }
 
     @PostMapping
     public Response<AirportResponse> create(
             @RequestBody AirportRequest request
     ) {
-        AirportDto airport = service.createAirport(request.toDto());
-        return respond(AirportResponse.fromDto(airport));
+        AirportDto dto = service.create(request.toDto());
+        return respond(AirportResponse.fromDto(dto));
     }
 
     @PutMapping("/{id}")
     public Response<AirportResponse> update(@PathVariable(value = "id") String id,
                                             @RequestBody AirportRequest request) {
-        AirportDto airport = service.updateAirport(id, request.toDto());
-        return respond(AirportResponse.fromDto(airport));
+        AirportDto dto = service.update(id, request.toDto());
+        return respond(AirportResponse.fromDto(dto));
     }
 
     @GetMapping("/filter")
@@ -49,7 +49,7 @@ public class AirportController extends BaseController {
             @RequestParam(value = "city", required = false) String cityName,
             @RequestParam(value = "country", required = false) String countryName,
             Pageable pageable) {
-        AirportDto airportDto = AirportDto.builder()
+        AirportDto dto = AirportDto.builder()
                 .name(name)
                 .code(code)
                 .city(
@@ -63,17 +63,17 @@ public class AirportController extends BaseController {
                                 .build()
                 )
                 .build();
-        return respond(toPageResponse(service.filter(airportDto, pageable)));
+        return respond(toPageResponse(service.filter(dto, pageable)));
     }
 
     @DeleteMapping("/{id}")
     public Response<Void> delete(@PathVariable(value = "id") String id) {
-        service.deleteAirport(id);
+        service.delete(id);
         return new Response<>(MetaResponse.ofSuccess());
     }
 
-    private Page<AirportResponse> toPageResponse(Page<AirportDto> airportList) {
-        return PageUtil.pageToDto(airportList, AirportResponse::fromDto);
+    private Page<AirportResponse> toPageResponse(Page<AirportDto> list) {
+        return PageUtil.pageToDto(list, AirportResponse::fromDto);
     }
 
 }
