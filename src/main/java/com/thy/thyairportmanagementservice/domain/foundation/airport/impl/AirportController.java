@@ -1,9 +1,8 @@
 package com.thy.thyairportmanagementservice.domain.foundation.airport.impl;
 
+import com.thy.thyairportmanagementservice.domain.citycountry.city.api.CityDto;
 import com.thy.thyairportmanagementservice.domain.foundation.airport.api.AirportDto;
 import com.thy.thyairportmanagementservice.domain.foundation.airport.api.AirportService;
-import com.thy.thyairportmanagementservice.domain.citycountry.city.api.CityDto;
-import com.thy.thyairportmanagementservice.domain.citycountry.country.api.CountryDto;
 import com.thy.thyairportmanagementservice.library.rest.BaseController;
 import com.thy.thyairportmanagementservice.library.rest.MetaResponse;
 import com.thy.thyairportmanagementservice.library.rest.PageResponse;

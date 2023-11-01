@@ -16,7 +16,6 @@ public class FlightResponse {
     private final AirportResponse destinationAirport;
 
 
-
     public static FlightResponse fromDto(FlightDto dto) {
         return FlightResponse.builder()
                 .id(dto.getId())

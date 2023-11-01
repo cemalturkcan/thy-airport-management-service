@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ThyAirportManagementServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ThyAirportManagementServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ThyAirportManagementServiceApplication.class, args);
+    }
 
 }

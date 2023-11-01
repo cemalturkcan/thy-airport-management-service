@@ -64,7 +64,7 @@ public class AirportServiceImpl implements AirportService {
 
         if (
                 airportDto.getCity().getCountryId() != null ||
-                airportDto.getCity().getId() != null
+                        airportDto.getCity().getId() != null
         ) {
             cityIds = cityService.filterCities(airportDto.getCity()).stream().map(City::getId).toList();
         }
