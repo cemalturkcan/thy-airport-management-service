@@ -2,8 +2,8 @@ package com.thy.thyairportmanagementservice.domain.foundation.airport.impl;
 
 import com.thy.thyairportmanagementservice.domain.foundation.airport.api.AirportDto;
 import com.thy.thyairportmanagementservice.domain.foundation.airport.api.AirportService;
-import com.thy.thyairportmanagementservice.domain.foundation.city.api.CityDto;
-import com.thy.thyairportmanagementservice.domain.foundation.country.api.CountryDto;
+import com.thy.thyairportmanagementservice.domain.citycountry.city.api.CityDto;
+import com.thy.thyairportmanagementservice.domain.citycountry.country.api.CountryDto;
 import com.thy.thyairportmanagementservice.library.rest.BaseController;
 import com.thy.thyairportmanagementservice.library.rest.MetaResponse;
 import com.thy.thyairportmanagementservice.library.rest.PageResponse;
@@ -44,22 +44,16 @@ public class AirportController extends BaseController {
 
     @GetMapping("/filter")
     public Response<PageResponse<AirportResponse>> filter(
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "code", required = false) String code,
-            @RequestParam(value = "city", required = false) String cityName,
-            @RequestParam(value = "country", required = false) String countryName,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "cityId", required = false) String cityId,
+            @RequestParam(value = "countryId", required = false) String countryId,
             Pageable pageable) {
         AirportDto dto = AirportDto.builder()
-                .name(name)
-                .code(code)
+                .keyword(keyword)
                 .city(
                         CityDto.builder()
-                                .name(cityName)
-                                .build()
-                )
-                .country(
-                        CountryDto.builder()
-                                .name(countryName)
+                                .id(cityId)
+                                .countryId(countryId)
                                 .build()
                 )
                 .build();

@@ -1,4 +1,4 @@
-package com.thy.thyairportmanagementservice.domain.foundation.country.impl;
+package com.thy.thyairportmanagementservice.domain.citycountry.country.impl;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

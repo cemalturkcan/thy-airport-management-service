@@ -8,13 +8,13 @@ import lombok.Data;
 @Data
 @Builder
 public class FlightResponse {
-
     private final String id;
     private final String arrivalDateTimeDisplay;
     private final String departureDateTimeDisplay;
     private final String flightDuration;
     private final AirportResponse originAirport;
     private final AirportResponse destinationAirport;
+
 
 
     public static FlightResponse fromDto(FlightDto dto) {

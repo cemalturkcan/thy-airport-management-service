@@ -1,4 +1,4 @@
-package com.thy.thyairportmanagementservice.domain.foundation.country.api;
+package com.thy.thyairportmanagementservice.domain.citycountry.country.api;
 
 import lombok.Builder;
 import lombok.Data;

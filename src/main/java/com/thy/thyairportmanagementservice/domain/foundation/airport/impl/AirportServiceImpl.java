@@ -1,15 +1,19 @@
 package com.thy.thyairportmanagementservice.domain.foundation.airport.impl;
 
+import com.thy.thyairportmanagementservice.domain.citycountry.city.api.CityDto;
+import com.thy.thyairportmanagementservice.domain.citycountry.city.api.CityService;
+import com.thy.thyairportmanagementservice.domain.citycountry.city.impl.City;
+import com.thy.thyairportmanagementservice.domain.citycountry.country.api.CountryService;
 import com.thy.thyairportmanagementservice.domain.foundation.airport.api.AirportDto;
 import com.thy.thyairportmanagementservice.domain.foundation.airport.api.AirportService;
-import com.thy.thyairportmanagementservice.domain.foundation.city.api.CityService;
-import com.thy.thyairportmanagementservice.domain.foundation.country.api.CountryService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,12 +32,19 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public AirportDto update(String id, AirportDto dto) {
-        return null;
+        return repository.findById(id)
+                .map(airport -> toEntity(airport, dto))
+                .map(repository::save)
+                .map(this::toDto)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Airport not found" + id)
+                );
     }
 
     @Override
     public void delete(String id) {
-
+        Airport airport = getByIdEntity(id);
+        repository.delete(airport);
     }
 
     @Override
@@ -49,22 +60,35 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public Page<AirportDto> filter(AirportDto airportDto, Pageable pageable) {
-        return null;
+        List<String> cityIds = null;
+
+        if (
+                airportDto.getCity().getCountryId() != null ||
+                airportDto.getCity().getId() != null
+        ) {
+            cityIds = cityService.filterCities(airportDto.getCity()).stream().map(City::getId).toList();
+        }
+
+        return repository.findLike(
+                airportDto.getKeyword(),
+                cityIds,
+                pageable
+        ).map(this::toDto);
     }
 
 
     private Airport toEntity(Airport airport, AirportDto dto) {
+        CityDto city = dto.getCity() != null && dto.getCity().getId() != null ? cityService.get(dto.getCity().getId()) : CityDto.builder().build();
         airport.setName(dto.getName());
         airport.setCode(dto.getCode());
-        airport.setCity(
-                cityService.getCityById(dto.getCity().getId())
+        airport.setCityId(
+                city.getId()
         );
-        airport.setCountry(
-                countryService.getCountryById(dto.getCountry().getId())
+        airport.setCountryId(
+                city.getCountryId()
         );
         return airport;
     }
-
 
 
     public AirportDto toDto(Airport airport) {
@@ -75,10 +99,10 @@ public class AirportServiceImpl implements AirportService {
                 .name(airport.getName())
                 .code(airport.getCode())
                 .city(
-                        cityService.toDto(airport.getCity())
+                        cityService.get(airport.getCityId())
                 )
                 .country(
-                        countryService.toDto(airport.getCountry())
+                        countryService.get(airport.getCountryId())
                 )
                 .build();
     }

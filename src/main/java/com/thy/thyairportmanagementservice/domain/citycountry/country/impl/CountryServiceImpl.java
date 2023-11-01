@@ -1,7 +1,7 @@
-package com.thy.thyairportmanagementservice.domain.foundation.country.impl;
+package com.thy.thyairportmanagementservice.domain.citycountry.country.impl;
 
-import com.thy.thyairportmanagementservice.domain.foundation.country.api.CountryDto;
-import com.thy.thyairportmanagementservice.domain.foundation.country.api.CountryService;
+import com.thy.thyairportmanagementservice.domain.citycountry.country.api.CountryDto;
+import com.thy.thyairportmanagementservice.domain.citycountry.country.api.CountryService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,12 @@ public class CountryServiceImpl implements CountryService {
     private final CountryRepository repository;
 
     @Override
-    public Country getCountryById(String id) {
-        return repository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Country not found with id: " + id)
-        );
+    public CountryDto get(String id) {
+        return repository.findById(id)
+                .map(this::toDto)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Country not found with id: " + id)
+                );
     }
 
     @Override
@@ -28,4 +30,6 @@ public class CountryServiceImpl implements CountryService {
                 .code(country.getCode())
                 .build();
     }
+
+
 }

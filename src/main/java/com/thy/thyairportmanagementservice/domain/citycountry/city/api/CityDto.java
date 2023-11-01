@@ -1,4 +1,4 @@
-package com.thy.thyairportmanagementservice.domain.foundation.city.api;
+package com.thy.thyairportmanagementservice.domain.citycountry.city.api;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,4 +9,5 @@ public class CityDto {
     private final String id;
     private final String name;
     private final String code;
+    private final String countryId;
 }

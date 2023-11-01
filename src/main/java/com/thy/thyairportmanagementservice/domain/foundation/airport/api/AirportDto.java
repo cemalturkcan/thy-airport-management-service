@@ -1,7 +1,7 @@
 package com.thy.thyairportmanagementservice.domain.foundation.airport.api;
 
-import com.thy.thyairportmanagementservice.domain.foundation.city.api.CityDto;
-import com.thy.thyairportmanagementservice.domain.foundation.country.api.CountryDto;
+import com.thy.thyairportmanagementservice.domain.citycountry.city.api.CityDto;
+import com.thy.thyairportmanagementservice.domain.citycountry.country.api.CountryDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,6 +15,7 @@ public class AirportDto {
     private final Date modified;
     private final String name;
     private final String code;
+    private final String keyword; // for filter
     private final CityDto city;
     private final CountryDto country;
 }
